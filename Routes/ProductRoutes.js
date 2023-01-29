@@ -49,7 +49,7 @@ productRoute.post(
   asyncHandler(async (req, res) => {
     const { rating, comment } = req.body;
     const product = await Product.findById(req.params.id);
-
+    console.log(product)
     if (product) {
       const alreadyReviewed = product.reviews.find(
         (r) => r.user.toString() === req.user._id.toString()
