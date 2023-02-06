@@ -14,5 +14,17 @@ blogROuter.get(
     }
     )
 )
+blogROuter.getById(
+    "/:id",
+    asyncHandler(async (req, res) => {
+        const blog = await Blog.findById(req.params.id)
+        if (blog) {
+            res.json(blog)
+        } else {
+            res.status(404)
+            throw new Error("Blog not found")
+        }
+    })
+)
 
 export default blogROuter;
