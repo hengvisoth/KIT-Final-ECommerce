@@ -14,7 +14,7 @@ blogROuter.get(
     }
     )
 )
-blogROuter.getById(
+blogROuter.get(
     "/:id",
     asyncHandler(async (req, res) => {
         const blog = await Blog.findById(req.params.id)
