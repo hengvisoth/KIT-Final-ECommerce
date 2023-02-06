@@ -1,5 +1,29 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
+import Product from "./ProductModel.js";
+
+const favoriteSchema = mongoose.Schema(
+  {
+   
+    product : {
+      type : mongoose.Schema.Types.ObjectId ,
+      ref : "Product"
+    } ,
+    name : {
+      type : String,
+      ref : "Product"
+    } , 
+    image : {
+      type : Array,
+      ref : "Product"
+    } , 
+    price : {
+      type : Number,
+      ref : "Product"
+    }
+    
+  }
+)
 
 const userSchema = mongoose.Schema(
   {
@@ -21,6 +45,7 @@ const userSchema = mongoose.Schema(
       required: true,
       default: false,
     },
+    favorite : [favoriteSchema]
   },
   {
     timestamps: true,

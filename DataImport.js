@@ -4,7 +4,8 @@ import users from "./data/users.js";
 import Product from "./Models/ProductModel.js";
 import products from "./data/Products.js";
 import asyncHandler from "express-async-handler";
-
+import blog from "./data/blog.js";
+import Blog from "./Models/BlogModel.js";
 const ImportData = express.Router();
 
 ImportData.post(
@@ -15,7 +16,14 @@ ImportData.post(
     res.send({ importUser });
   })
 );
-
+ImportData.post(
+  "/blog",
+  asyncHandler(async (req, res) => {
+    await Blog.remove({});
+    const importUser = await Blog.insertMany(blog);
+    res.send({ importUser });
+  })
+);
 ImportData.post(
   "/products",
   asyncHandler(async (req, res) => {

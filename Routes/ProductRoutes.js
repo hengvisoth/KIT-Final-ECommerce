@@ -3,6 +3,7 @@ import asyncHandler from "express-async-handler";
 import Product from "./../Models/ProductModel.js";
 import protect from "./../Middleware/AuthMiddleware.js";
 
+
 const productRoute = express.Router();
 
 // GET ALL PRODUCT
@@ -42,6 +43,12 @@ productRoute.get(
   })
 );
 
+
+// const getDataFromDb = async (startIndex, endIndex) => {
+//   return await Product.find({})
+//     .skip(startIndex)
+//     .limit(endIndex - startIndex);
+// };
 // PRODUCT REVIEW
 productRoute.post(
   "/:id/review",

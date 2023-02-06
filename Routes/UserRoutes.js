@@ -3,7 +3,7 @@ import asyncHandler from "express-async-handler";
 import protect from "../Middleware/AuthMiddleware.js";
 import generateToken from "../utils/generateToken.js";
 import User from "./../Models/UserModel.js";
-
+import Product from "../Models/ProductModel.js";
 const userRouter = express.Router();
 
 // LOGIN
@@ -113,5 +113,34 @@ userRouter.put(
     }
   })
 );
+userRouter.post('/favorite/:id' , protect , asyncHandler(async(req,res)=> {
+  console.log(  req.params.id  )
+  const user = await User.findById(req.user._id) ; 
+  if(user) {
+    // find product by id 
+    const product = await Product.findById(req.params.id) ;
+    if(product) {
+      // check if product is already in favorite list
+      const isFavorite = user.favorite.find( (item) => item.product.toString() === product._id.toString() ) ;
+      if(isFavorite) {
+        // remove from favorite list
+        user.favorite = user.favorite.filter( (item) => item.product.toString() !== product._id.toString() ) ;
+      } else {
+        // add to favorite list
+        user.favorite.push({
+          product : product._id , 
+          name : product.name ,
+          image : product.image ,
+          price : product.price , 
+          countInStock : product.countInStock
+        }) ;
+      }  
+      user.save()
+      res.json(user) ;
+    }  
+  }
+}))
+
+
 
 export default userRouter;
