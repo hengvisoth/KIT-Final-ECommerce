@@ -113,6 +113,15 @@ userRouter.put(
     }
   })
 );
+userRouter.get('/favorite' , protect , asyncHandler(async(req,res)=> {
+  const user = await User.findById(req.user._id) ;
+  if(user) {
+    res.json(user.favorite) ;
+  } else {
+    res.status(404) ;
+    throw new Error('User not found') ;
+  }
+}))
 userRouter.post('/favorite/:id' , protect , asyncHandler(async(req,res)=> {
   console.log(  req.params.id  )
   const user = await User.findById(req.user._id) ; 
