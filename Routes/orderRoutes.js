@@ -25,6 +25,12 @@ orderRouter.post(
       return;
     } else {
       console.log("Else Statement")
+      console.log("Order Item",orderItems)
+      console.log("Shipping Address",shippingAddress)
+      console.log("Payment Method",paymentMethod)
+      console.log("Tax Price",taxPrice)
+      console.log("Shipping Price",shippingPrice)
+      console.log("Total Price",totalPrice)
       const order = new Order({
         orderItems,
         user: req.user._id,
@@ -34,9 +40,14 @@ orderRouter.post(
         shippingPrice,
         totalPrice,
       });
-
-      const createOrder = await order.save();
-      res.status(201).json(createOrder);
+      await order.save().then((result) => {
+        console.log(result)
+        res.status(201).json(result)
+      }).catch((err) => {
+        console.log(err)
+        res.status(400).json(err)
+      });
+      // res.status(201).json(createOrder);
     }
   })
 );

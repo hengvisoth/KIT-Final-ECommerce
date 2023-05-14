@@ -7,10 +7,13 @@ import { errorHandler, notFound } from "./Middleware/Errors.js";
 import userRouter from "./Routes/UserRoutes.js";
 import orderRouter from "./Routes/orderRoutes.js";
 import blogROuter from "./Routes/blogRoute.js";
+import serviceRouter from "./Routes/servicesRoute.js";
 import bodyParser from "body-parser";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
+import homeRouter from "./Routes/homeRouter.js";
+
 
 dotenv.config();
 connectDatabase();
@@ -26,12 +29,14 @@ app.use(cors({
 	credentials: true,
 }))
 // API
-app.use("/api/import", ImportData);
-app.use("/api/products", productRoute);
-app.use("/api/users", userRouter);
-app.use("/api/orders", orderRouter);
-app.use("/api/blog", blogROuter);
-app.get("/api/config/paypal", (req, res) => {
+app.use("/api/v1/import", ImportData);
+app.use("/api/v1/products", productRoute);
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/orders", orderRouter);
+app.use("/api/v1/blog", blogROuter);
+app.use("/api/v1/services",serviceRouter) ; 
+app.use("/api/v1/home",homeRouter)
+app.get("/api/v1/config/paypal", (req, res) => {
   res.send(process.env.PAYPAL_CLIENT_ID);
 });
 

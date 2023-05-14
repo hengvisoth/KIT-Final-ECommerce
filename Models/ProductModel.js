@@ -27,6 +27,14 @@ const productSchema = mongoose.Schema(
     image: {
       type: Array,
     },
+    title : {
+      type : String , 
+      required : true
+    } , 
+    subTitle : { 
+      type : String ,
+
+    },
     description: {
       type: String,
       required: true,
@@ -48,11 +56,21 @@ const productSchema = mongoose.Schema(
       required: true,
       default: 0,
     },
+    discount_price : {
+      type : Number
+    },
     countInStock: {
       type: Number,
       required: true,
       default: 0,
     },
+    brand : { 
+      type : String,
+      required : true
+    },
+    categories: {
+      type: String,
+    }
   },
   {
     timestamps: true,

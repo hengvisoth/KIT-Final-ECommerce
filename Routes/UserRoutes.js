@@ -10,21 +10,21 @@ const userRouter = express.Router();
 userRouter.post(
   "/login",
   asyncHandler(async (req, res) => {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const { phone_number, password } = req.body;
+    const user = await User.findOne({ phone_number });
 
     if (user && (await user.matchPassword(password))) {
       res.json({
         _id: user._id,
         name: user.name,
-        email: user.email,
+        phone_number: user.phone_number,
         isAdmin: user.isAdmin,
         token: generateToken(user._id),
         createdAt: user.createdAt,
       });
     } else {
       res.status(401);
-      throw new Error("Invalid Email or Password");
+      throw new Error("Invalid phone_number or Password");
     }
   })
 );
@@ -33,9 +33,9 @@ userRouter.post(
 userRouter.post(
   "/",
   asyncHandler(async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, phone_number, password } = req.body;
 
-    const userExists = await User.findOne({ email });
+    const userExists = await User.findOne({ phone_number });
 
     if (userExists) {
       res.status(400);
@@ -44,7 +44,7 @@ userRouter.post(
 
     const user = await User.create({
       name,
-      email,
+      phone_number,
       password,
     });
 
@@ -52,7 +52,7 @@ userRouter.post(
       res.status(201).json({
         _id: user._id,
         name: user.name,
-        email: user.email,
+        phone_number: user.phone_number,
         isAdmin: user.isAdmin,
         token: generateToken(user._id),
       });
@@ -74,7 +74,7 @@ userRouter.get(
       res.json({
         _id: user._id,
         name: user.name,
-        email: user.email,
+        phone_number: user.phone_number,
         isAdmin: user.isAdmin,
         createdAt: user.createdAt,
       });
@@ -94,7 +94,7 @@ userRouter.put(
 
     if (user) {
       user.name = req.body.name || user.name;
-      user.email = req.body.email || user.email;
+      user.phone_number = req.body.phone_number || user.phone_number;
       if (req.body.password) {
         user.password = req.body.password;
       }
@@ -102,7 +102,7 @@ userRouter.put(
       res.json({
         _id: updatedUser._id,
         name: updatedUser.name,
-        email: updatedUser.email,
+        phone_number: updatedUser.phone_number,
         isAdmin: updatedUser.isAdmin,
         createdAt: updatedUser.createdAt,
         token: generateToken(updatedUser._id),

@@ -28,6 +28,18 @@ productRoute.get(
     res.json({ products, page, pages: Math.ceil(count / pageSize) });
   })
 );
+// GET PRODUCT BY CATEGORIES
+productRoute.get("/categories/:categories", async (req, res) => { 
+  console.log(req.params.categories);
+    const product = await Product.find({categories : req.params.categories})
+    if(product){
+      res.json(product);
+    }else{
+      res.status(404);
+      throw new Error("Product not Found");
+
+    }}
+)
 
 // GET SINGLE PRODUCT
 productRoute.get(
@@ -84,6 +96,27 @@ productRoute.post(
       res.status(404);
       throw new Error("Product not Found");
     }
+  })
+);
+productRoute.get(
+  "/individual",
+  asyncHandler(async (req, res) => {
+    const pageSize = 12;
+    const page = Number(req.query.pageNumber) || 1;
+    const keyword = req.query.keyword
+      ? {
+          name: {
+            $regex: req.query.keyword,
+            $options: "i",
+          },
+        }
+      : {};
+    const count = await Product.countDocuments({ ...keyword });
+    const products = await Product.find({ ...keyword })
+      .limit(pageSize)
+      .skip(pageSize * (page - 1))
+      .sort({ _id: -1 });
+    res.json({ products, page, pages: Math.ceil(count / pageSize) });
   })
 );
 productRoute.delete("/delete" ,asyncHandler( async(req,res) => {
