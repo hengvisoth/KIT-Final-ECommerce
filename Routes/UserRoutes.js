@@ -10,7 +10,11 @@ const userRouter = express.Router();
 userRouter.post(
   "/login",
   asyncHandler(async (req, res) => {
-    const { phone_number, password } = req.body;
+    var { phone_number, password } = req.body;
+    console.log(phone_number,password)
+    // remove 855 from phone number
+      phone_number = phone_number.slice(3);
+
     const user = await User.findOne({ phone_number });
 
     if (user && (await user.matchPassword(password))) {
@@ -34,7 +38,6 @@ userRouter.post(
   "/",
   asyncHandler(async (req, res) => {
     const { name, phone_number, password } = req.body;
-
     const userExists = await User.findOne({ phone_number });
 
     if (userExists) {

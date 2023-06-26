@@ -64,10 +64,11 @@ const productSchema = mongoose.Schema(
       required: true,
       default: 0,
     },
-    brand : { 
+    brandName : {
       type : String,
       required : true
     },
+   
     categories: {
       type: String,
     }

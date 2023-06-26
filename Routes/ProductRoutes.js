@@ -123,7 +123,107 @@ productRoute.delete("/delete" ,asyncHandler( async(req,res) => {
   const delteProd = await Product.deleteMany({});
   res.json(delteProd);
 }
-
-
 ))
+
+productRoute.get('/:id/specification', function(req, res, next) {
+  res.status(200).json({
+    "status_code":"200",
+  "status":"OK",
+  "data":{"imageUrl" : "" , 
+  "Wheelbase" : "Screws" , 
+  "Size" : "75mm" , 
+  "Technical Parameters" : "Value 2" , 
+  "Model Number" : "Wheel & Tires" , 
+  "For Vehicle Types" : "Cars" , 
+  "Tool Suplies" : "" , 
+  "Four-wheel Drive Attributes" : "Tires" , 
+  "Remote Control Peripherals / Devices" : "Servos" , 
+  "Update Parts / Accessories" : "Tires" , 
+"RC Parts & Accs " : "Servos" , 
+"Material" : "Ruber"
+}
+  });
+});
+
+productRoute.get('/:id/description', function(req, res, next) {
+  res.status(200).json({
+    "status_code":"200",
+  "status":"OK",
+  "data":{"description":"Goodyear Tire and Rubber Company Tread Vehicle Discount Tire."
+}
+  });
+});
+
+productRoute.get('/wheels',async function(req,res,next){
+  const product = await Product.find({})
+  if (product) {
+    res.json(product);
+  } else {
+    res.status(404);
+    throw new Error("Product not Found");
+  }
+})
+
+productRoute.get('/discount',function(req,res,next){
+  res.status(200).json({
+    "status_code":"200",
+    "status":"OK",
+    "data":{
+      "data":[
+        {
+          "id" : "1" , 
+           "brandName" : "TOYOTA" , 
+           "imageLink" : "https://i.pinimg.com/564x/60/7b/23/607b23450f348d8090a940adca1b6f3f.jpg" , 
+           "price" : 12.00 ,
+           "discountPrice" : 25.00 , 
+           "ratings" : 2 , 
+           "subTitle" : "SubTitle" , 
+           "title" : "The Best Product Ever of 2023" ,
+           "percent_off" : "70%"
+         },
+         {
+          "id" : "2" , 
+           "brandName" : "TOYOTA" , 
+           "imageLink" : "https://i.pinimg.com/564x/60/7b/23/607b23450f348d8090a940adca1b6f3f.jpg" , 
+           "price" : 12.00 ,
+           "discountPrice" : 25.00 , 
+
+           "ratings" : 2 , 
+           "subTitle" : "SubTitle" , 
+           "title" : "The Best Product Ever of 2023" , 
+           "percent_off" : "70%"
+
+         },
+         {
+          "id" : "3" , 
+           "brandName" : "TOYOTA" , 
+           "imageLink" : "https://i.pinimg.com/564x/60/7b/23/607b23450f348d8090a940adca1b6f3f.jpg" , 
+           "price" : 12.00 ,
+           "discountPrice" : 25.00 , 
+
+           "ratings" : 2 , 
+           "subTitle" : "SubTitle" , 
+           "title" : "The Best Product Ever of 2023" , 
+           "percent_off" : "70%"
+
+         },
+         {
+          "id" : "4" , 
+           "brandName" : "TOYOTA" , 
+           "imageLink" : "https://i.pinimg.com/564x/60/7b/23/607b23450f348d8090a940adca1b6f3f.jpg" , 
+           "price" : 12.00 ,
+           "discountPrice" : 25.00 , 
+
+           "ratings" : 2 , 
+           "subTitle" : "SubTitle" , 
+           "title" : "The Best Product Ever of 2023" , 
+           "percent_off" : "70%"
+
+         },
+
+      ]
+  }
+  })
+})
+
 export default productRoute;
