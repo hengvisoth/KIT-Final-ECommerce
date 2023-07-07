@@ -17,7 +17,6 @@ const reviewSchema = mongoose.Schema(
 );
 // const imageSchema = mongoose.Schema()
 
-
 const productSchema = mongoose.Schema(
   {
     name: {
@@ -32,7 +31,7 @@ const productSchema = mongoose.Schema(
       required: true,
     },
     reviews: [reviewSchema],
- 
+
     rating: {
       type: Number,
       required: true,
@@ -52,6 +51,10 @@ const productSchema = mongoose.Schema(
       type: Number,
       required: true,
       default: 0,
+    },
+    isFav: {
+      default: false,
+      type: Boolean,
     },
   },
   {

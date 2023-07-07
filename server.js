@@ -26,6 +26,7 @@ app.use(cors({
 	credentials: true,
 }))
 // API
+//localhost:3000/api/products
 app.use("/api/import", ImportData);
 app.use("/api/products", productRoute);
 app.use("/api/users", userRouter);

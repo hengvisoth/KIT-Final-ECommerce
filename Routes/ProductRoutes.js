@@ -3,7 +3,6 @@ import asyncHandler from "express-async-handler";
 import Product from "./../Models/ProductModel.js";
 import protect from "./../Middleware/AuthMiddleware.js";
 
-
 const productRoute = express.Router();
 
 // GET ALL PRODUCT
@@ -21,11 +20,13 @@ productRoute.get(
         }
       : {};
     const count = await Product.countDocuments({ ...keyword });
-    const products = await Product.find({ ...keyword })
-      .limit(pageSize)
-      .skip(pageSize * (page - 1))
-      .sort({ _id: -1 });
-    res.json({ products, page, pages: Math.ceil(count / pageSize) });
+    const products = await Product.find({ ...keyword });
+    // .limit(pageSize)
+    // .skip(pageSize * (page - 1))
+    // .sort({ _id: -1 });
+    console.log(products.length);
+    // res.json({ products, page, pages: Math.ceil(count / pageSize) });
+    res.json(products);
   })
 );
 
@@ -43,7 +44,6 @@ productRoute.get(
   })
 );
 
-
 // const getDataFromDb = async (startIndex, endIndex) => {
 //   return await Product.find({})
 //     .skip(startIndex)
@@ -56,7 +56,7 @@ productRoute.post(
   asyncHandler(async (req, res) => {
     const { rating, comment } = req.body;
     const product = await Product.findById(req.params.id);
-    console.log(product)
+    console.log(product);
     if (product) {
       const alreadyReviewed = product.reviews.find(
         (r) => r.user.toString() === req.user._id.toString()
@@ -86,11 +86,11 @@ productRoute.post(
     }
   })
 );
-productRoute.delete("/delete" ,asyncHandler( async(req,res) => {
-  const delteProd = await Product.deleteMany({});
-  res.json(delteProd);
-}
-
-
-))
+productRoute.delete(
+  "/delete",
+  asyncHandler(async (req, res) => {
+    const delteProd = await Product.deleteMany({});
+    res.json(delteProd);
+  })
+);
 export default productRoute;
